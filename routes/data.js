@@ -8,6 +8,7 @@ var Device = require("../models/device");
 var Data = require("../models/data");
 var User = require("../models/user");
 
+var path = require("path");
 
 router.post("/post_data", function(req, res) {
 	var responseJson = {
@@ -86,7 +87,7 @@ router.post("/post_data", function(req, res) {
 	}
 });
 
-router.get("/:device_id", function(req, res) {
+router.get("/getData/:device_id", function(req, res) {
 	var device_id = req.params.device_id;
 
 	var responseJson = {
@@ -119,10 +120,14 @@ router.get("/:device_id", function(req, res) {
 		else {
 			responseJson.message = "error";
 			console.log("ERROR finding document.");
-			res.status(200).send(JSON.stringify(responseJson));
+			res.status(201).send(JSON.stringify(responseJson));
 		}
 	});
 	//res.status(200).send(JSON.stringify(responseJson));
+});
+
+router.get("/device", function(req, res) {
+	res.sendFile(path.resolve("public/uv_data.html"));
 });
 
 module.exports = router;
