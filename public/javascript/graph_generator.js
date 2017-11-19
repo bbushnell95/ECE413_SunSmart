@@ -13,21 +13,22 @@ function drawChart() {
     for(var i = 0; i < samples.length; i++){
         rows.push([new Date(samples[i].timeStamp*1000), samples[i].uvIndex]);
     }
+
+    data.addRows(rows);
     
+    var options = {
+      title: 'Hourly UV Exposure',
+      hAxis: {title: 'Time'},
+      vAxis: {title: 'UV Level'},
+      legend: 'none',
+      lineWidth: 3
+    };
+  
+    var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+  
+    chart.draw(data, options);
+      
   }, "json");
     
 
-  data.addRows(rows);
-  
-  var options = {
-    title: 'Hourly UV Exposure',
-    hAxis: {title: 'Time'},
-    vAxis: {title: 'UV Level'},
-    legend: 'none',
-    lineWidth: 3
-  };
-
-  var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
-
-  chart.draw(data, options);
 }
