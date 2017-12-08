@@ -16,7 +16,8 @@ router.get('/uvindex', function(req, res, next){
             key: api
         }
     }, function(error, response, body){
-        var data = JSON.parse(body);            //res.status(data.status);
+        var data = JSON.parse(body);
+        console.log(data);
         var uv_list = [];
         uvs = data['data'];
         for(i = 0; i < 5; i++){

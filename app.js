@@ -32,7 +32,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/data', data);
 app.use('/devices', devices);
-app.use('/thirdpartaip', thirdpartapi);
+app.use('/thirdpartapi', thirdpartapi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
