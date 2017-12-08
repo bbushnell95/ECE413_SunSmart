@@ -9,6 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var data = require('./routes/data');
 var devices = require('./routes/devices');
+var thirdpartapi = require('./routes/thirdpartapi');
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/data', data);
 app.use('/devices', devices);
+app.use('/thirdpartaip', thirdpartapi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
