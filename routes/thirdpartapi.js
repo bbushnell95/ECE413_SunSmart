@@ -4,8 +4,8 @@ var request = require('request');
 
 var api = '650be0fa52504acebc8d6656733d6b3a';
 
-router.get('/uvindex', function(req, res, next){
-    var zip =req.query.zip;
+router.get('/uvforecast/:zip', function(req, res){
+    var zip =req.params.zip;
 
     request({
         method: 'GET',
@@ -17,7 +17,6 @@ router.get('/uvindex', function(req, res, next){
         }
     }, function(error, response, body){
         var data = JSON.parse(body);
-        console.log(data);
         var uv_list = [];
         uvs = data['data'];
         for(i = 0; i < 5; i++){
