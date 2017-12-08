@@ -19,8 +19,10 @@ router.get('/uvforecast/:zip', function(req, res){
         var data = JSON.parse(body);
         var uv_list = [];
         uvs = data['data'];
+
         for(i = 0; i < 5; i++){
-            uv_list.push(uvs[i].uv);
+            var obj = {date:uvs[i]["datetime"], uv: uvs[i].uv};
+            uv_list.push(obj);
         }
         res.status(200).send(JSON.stringify(uv_list));
 
