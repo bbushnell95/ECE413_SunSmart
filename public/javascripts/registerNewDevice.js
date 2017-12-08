@@ -17,7 +17,9 @@ function registerDevice(){
 // Device successfully register. Update the list of devices and hide the add device form
 function deviceRegistered(data, status, xhr) {
     // Add new device to the device list
-    $("#message").html("<li class='collection-item'>ID: " +
-            $("#deviceId").val() + ", APIKEY: " + data["apikey"] + "</li>")
+    $("#message").html("<li class='collection-item'>`" +
+            " APIKEY: " + data["apiKey"] + "</li>")
     $("#message").show()
 }
+
+$("#registerDevice").click(registerDevice);
