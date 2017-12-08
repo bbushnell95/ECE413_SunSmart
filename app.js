@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var data = require('./routes/data');
+var devices = require('./routes/devices');
 
 var app = express();
 
@@ -29,7 +30,7 @@ app.use('/', index);
 
 app.use('/users', users);
 app.use('/data', data);
-
+app.use('/devices', devices);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -51,5 +52,4 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-app.listen(3000);
 console.log("Starting on port 3000");
