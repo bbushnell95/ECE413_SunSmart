@@ -1,5 +1,3 @@
-
-
 function emailCallBack() {
     $("#extendEmail").removeClass("hidden");
 };
