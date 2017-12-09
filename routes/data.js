@@ -125,4 +125,6 @@ router.get("/:device_id", function(req, res) {
 	//res.status(200).send(JSON.stringify(responseJson));
 });
 
+
+
 module.exports = router;
