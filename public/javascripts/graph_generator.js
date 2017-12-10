@@ -2,13 +2,35 @@
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart("all"));
 
-function drawChart(range) {
+document.addEventListener("DOMContentLoaded", function() {
+    // CHeck if there is a token, if not, redirect to signin
+    if( !window.localStorage.getItem("token")){
+        window.location = "signin.html";
+    }
+});
+
+
+$.ajax({
+    url: '/devices/getDeviceID',
+    type: 'GET',
+    responseType:'json',
+    success: drawChart,
+    error: function(jqXHR, status, error){
+        var response = JSON.parse(jqXHR.responseText);
+        $("#chart_div").html("Error: " + response.message);
+        $("#chart_div").show();
+    }
+});
+
+function drawChart(data, status, xhr) {
   var data = new google.visualization.DataTable();
   data.addColumn('datetime', 'Hour');
   data.addColumn('number', 'UV Level');
   var rows = [];
+  var range = $("#rangeSelect").value;
 
-  $.get("http://ec2-13-58-73-63.us-east-2.compute.amazonaws.com:3000/data/getData/1a0040000d51353532343635",null, function(response){
+
+  $.get("/data/getData/"+ data["deviceID"], null, function(response){
     var samples = response.samples;
     if (range == "all") {
       for(var i = 0; i < samples.length; i++){
