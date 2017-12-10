@@ -3,7 +3,7 @@ var router = express.Router();
 var Device = require("../models/device");
 var fs = require('fs');
 
-function getNewApikey() {
+function getNewApiKey() {
     var newApikey = "";
     var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -40,7 +40,7 @@ router.post('/register', function(req, res, next){
         }
         else {
             //NEW APIKEY YOOO
-            newApiKey = getNewApiKey();
+            var newApiKey = getNewApiKey();
             //new device with id, email, apikey
             var newDevice = new Device({
                 deviceId: req.body.deviceId,
