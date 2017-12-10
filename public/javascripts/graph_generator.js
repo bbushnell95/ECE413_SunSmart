@@ -1,6 +1,6 @@
 // JavaScript File
 google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawChart("all"));
+google.charts.setOnLoadCallback(getDeviceID);
 
 document.addEventListener("DOMContentLoaded", function() {
     // CHeck if there is a token, if not, redirect to signin
@@ -14,6 +14,7 @@ function getDeviceID(){
       url: '/devices/getDeviceID',
       type: 'GET',
       responseType:'json',
+      headers: {'x-auth': window.localStorage.getItem("token") },
       success: drawChart,
       error: function(jqXHR, status, error){
           var response = JSON.parse(jqXHR.responseText);
@@ -23,7 +24,7 @@ function getDeviceID(){
   });
 };
 
-function drawChart(data, status, xhr) {
+function drawChart(res, status, xhr) {
   var data = new google.visualization.DataTable();
   data.addColumn('datetime', 'Hour');
   data.addColumn('number', 'UV Level');
@@ -31,8 +32,8 @@ function drawChart(data, status, xhr) {
   var range = $("#rangeSelect").value;
 
 
-  $.get("/data/getData/"+ data["deviceID"], null, function(response){
-    var samples = response.samples;
+  $.get("/data/"+ res["deviceID"], null, function(response){
+    var samples = JSON.parse(response).samples;
     if (range == "all") {
       for(var i = 0; i < samples.length; i++){
           rows.push([new Date(samples[i].timeStamp*1000), samples[i].uvIndex]);
@@ -44,19 +45,14 @@ function drawChart(data, status, xhr) {
       var earliestMilli;
       for(i = 0; i < samples.length; i++) {
         if (samples[i].timeStamp > max) { 
-          max = samples[i].max;
+          max = samples[i].timeStamp;
         }
       }
-      if (range == "hour")
-        earliestMilli = max - 3600;
-      else if (range == "day")
-        earliestMilli = max - 86400;
-      else if (range == "week")
-        earliestMilli = max - 604800;
-      else if (range == "month")
-        earliestMilli = max - 2592000;
-      else
-        earliestMilli = max - 31536000;
+      if (range == "hour") earliestMilli = max - 3600;
+      else if (range == "day") earliestMilli = max - 86400;
+      else if (range == "week") earliestMilli = max - 604800;
+      else if (range == "month") earliestMilli = max - 2592000;
+      else earliestMilli = max - 31536000;
       for(i = 0; i < samples.length; i++) {
         if (samples[i].timeStamp > earliestMilli) {
           rows.push([new Date(samples[i].timeStamp*1000), samples[i].uvIndex]);
@@ -77,6 +73,7 @@ function drawChart(data, status, xhr) {
     var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
   
     chart.draw(data, options);
+  });
 }
 
 $("#refresh").click(getDeviceID);

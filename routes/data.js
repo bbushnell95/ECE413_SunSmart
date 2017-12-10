@@ -60,9 +60,13 @@ router.post("/post_data", function(req, res) {
 			responseJson.success = true;
 			var foundDevice = Device.findOne({ deviceId: req.body.samples[0].deviceId, apiKey: req.body.samples[0].APIKEY }, function(err, device) {
 				if (err) {
-					responseJson.message = "Device ID " + req.body.deviceId + " not recognized";
-					res.status(201).send(JSON.stringify(responseJson));
+					responseJson.message = "Find One Error";
+					res.status(401).send(JSON.stringify(responseJson));
 				}
+                else if(!device){
+                    responseJson.messae = "Device not recognized";
+                    res.status(401).send(JSON.stringify(responseJson));
+                }
 				else {
 					//FIXME: insert security apikey check
 					

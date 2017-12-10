@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Device = require("../models/device");
+var User = require("../models/user");
 var fs = require('fs');
 var jwt = require('jwt-simple');
 
@@ -33,44 +34,57 @@ router.post('/register', function(req, res, next){
     // decode this mf
     try {
         var decoded = jwt.decode(token, secret);
-
         //Make sure user didnt forget to put deviceID
         if(!req.body.hasOwnProperty("deviceId")){
             responseJson.message = "Missing deviceId.";
             res.status(400).json(responseJson);
             return;
         }
+        //check to make sure user doesn't already have a device
+        User.findOne({email: decoded.email }, function(err, user) {
+            if(user){
+                //if user already has device
+                if(user.deviceId){
+                    responseJson.message = "User already has a device with ID: " + user.deviceId + " registered";
+                    res.status(400).json(responseJson);
+                } else {
+                    //Now check if device has already been registered
+                    Device.findOne({deviceId: req.body.deviceId }, function(err, device) {
+                        if (device !== null){
+                            responseJson.message = "Device with ID: " + req.body.deviceId + " has already been registered.";
+                            res.status(400).json(responseJson);
+                        }
+                        else {
+                            //NEW APIKEY YOOO
+                            var newApiKey = getNewApiKey();
+                            //new device with id, email, apikey
+                            var newDevice = new Device({
+                                deviceId: req.body.deviceId,
+                                userEmail: decoded.email,
+                                apiKey: newApiKey
+                            });
 
-        //Now check if device has already been registered
-        Device.findOne({deviceId: req.body.deviceId }, function(err, device) {
-            if (device !== null){
-                responseJson.message = "Device with ID: " + req.body.deviceId + " has already been registered.";
-                res.status(400).json(responseJson);
-            }
-            else {
-                //NEW APIKEY YOOO
-                var newApiKey = getNewApiKey();
-                //new device with id, email, apikey
-                var newDevice = new Device({
-                    deviceId: req.body.deviceId,
-                    userEmail: decoded.email,
-                    apiKey: newApiKey
-                });
-
-                //Time to save
-                newDevice.save(function(err, newDevice){
-                    if(err){
-                        console.log("Error: " + err);
-                        responseJson.message = err;
-                        res.status(400).json(responseJson);
-                    }
-                    else{
-                        responseJson.registered = true;
-                        responseJson.apiKey = newApiKey;
-                        responseJson.message = "Device " + req.body.deviceId + " was registered.";
-                        res.status(201).json(responseJson);
-                    }
-                });
+                            //Time to save
+                            newDevice.save(function(err, newDevice){
+                                if(err){
+                                    console.log("Error: " + err);
+                                    responseJson.message = err;
+                                    res.status(400).json(responseJson);
+                                }
+                                else{
+                                    responseJson.registered = true;
+                                    responseJson.apiKey = newApiKey;
+                                    responseJson.message = "Device " + req.body.deviceId + " was registered.";
+                                    res.status(201).json(responseJson);
+                                }
+                            });
+                            //now update user to include deviceID
+                            User.findOneAndUpdate({email:decoded.email}, {deviceId: req.body.deviceId},  function(err, user){
+                                console.log(user);
+                            });
+                        }
+                    });
+                }
             }
         });
     } catch(exception) {
