@@ -1,19 +1,13 @@
-function emailCallBack() {
-    $("#extendEmail").removeClass("hidden");
-};
-
 function passwordCallBack() {
-    $("#extendPassword").slidedown(fast);
+    $("#extendPassword").removeClass("hidden");
+    $("#zipButton").addClass("hidden");
 };
 
 function zipCallBack() {
-    $("#extendZIP").slidedown(fast);
+    $("#extendZIP").removeClass("hidden");
+    $("#passwordButton").addClass("hidden");
 };
 
-$("#emailButton").click(emailCallBack);
 $("#passwordButton").click(passwordCallBack);
 $("#zipButton").click(zipCallBack);
 
-$("#emailButton").click(function(){
-    $("#extendEmail").removeClass("hidden");
-});

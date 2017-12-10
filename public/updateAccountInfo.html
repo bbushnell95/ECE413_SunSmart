@@ -48,16 +48,27 @@
                           </div><br>
                       </div>
                         <div class="mdl-card__actions">
-                          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id = "emailButton">Email</button><br>
-                          <div id = "extendEmail" class = "hidden">Current Email: ... fixme</div>
-                          <div id = "extendEmail" class="hidden mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                              <label class="mdl-textfield__label" for="newEmail">New Email</label>
-                              <input class="mdl-textfield__input" type="text" id="newEmial"/>
-                          </div><br>
                           <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id = "passwordButton">Password</button>
-                          <div id = "extendPassword"></div><br>
+                          <div id = "extendPassword" class="hidden">
+                              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                  <label class="mdl-textfield__label" for="password">New Password</label>
+                                  <input class="mdl-textfield__input" type="password" id="password"/>
+                              </div><br>
+                              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" class="hidden">
+                                  <label class="mdl-textfield__label" for="passwordConfirm">Confirm Password</label>
+                                  <input class="mdl-textfield__input" type="password" id="passwordConfirm"/>
+                              </div><br>
+                              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id = "submit">Submit</button>
+                          </div><br><br>
                           <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id = "zipButton">Default ZIP code</button>
-                          <div id = "extendZIP"></div><br>
+                          <div id = "extendZIP" class="hidden">
+                              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                  <label class="mdl-textfield__label" for="zip">New Zip</label>
+                                  <input class="mdl-textfield__input" type="text" id="zip"/>
+                              </div><br>
+                              <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id = "submit">Submit</button>
+
+                          </div><br>
                         </div>
                   </div>
               </main>
