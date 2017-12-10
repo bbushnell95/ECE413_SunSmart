@@ -46,6 +46,11 @@ router.post("/post_data", function(req, res) {
 				res.status(201).send(JSON.stringify(responseJson));
 				failed = true;
 			}
+			else if (!req.body.samples[i].hasOwnProperty("APIKEY")) {
+				responseJson.message = "Request missing APIKEY parameter";
+				res.status(201).send(JSON.stringify(responseJson));
+				failed = true;
+			}
 			if (failed == true) {
 				i = req.body.samples.length;
 			}
@@ -53,12 +58,12 @@ router.post("/post_data", function(req, res) {
 		if (failed == false) {
 //res.status(201).send(JSON.stringify(responseJson));
 			responseJson.success = true;
-//			Device.findOne({ deviceId: req.body.deviceId }, function(err, device) {
-//				if (device == null) {
-					//responseJson.message = "Device ID " + req.body.deviceId + " not recognized";
-					//res.status(201).send(JSON.stringify(responseJson));
-				//}
-//				else {
+			var foundDevice = Device.findOne({ deviceId: req.body.samples[0].deviceId, apiKey: req.body.samples[0].APIKEY }, function(err, device) {
+				if (err) {
+					responseJson.message = "Device ID " + req.body.deviceId + " not recognized";
+					res.status(201).send(JSON.stringify(responseJson));
+				}
+				else {
 					//FIXME: insert security apikey check
 					
 					//FIXME: insert API call to Google's geocoding API
@@ -80,8 +85,8 @@ router.post("/post_data", function(req, res) {
 						}
 					});
 					//res.status(201).send(JSON.stringify(responseJson));
-				//}
-			//});
+				}
+			});
 		}
 	}
 });
@@ -92,7 +97,7 @@ router.get("/:device_id", function(req, res) {
 	var responseJson = {
 		average: 0,
 		message: ""
-	}
+	};
 
 	//get number of data points by device
 	var query = Data.find({ deviceId: device_id});
