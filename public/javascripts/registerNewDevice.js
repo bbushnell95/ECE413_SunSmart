@@ -3,6 +3,7 @@ function registerDevice(){
     $.ajax({
         url: '/devices/register',
         type: 'POST',
+        headers: {'x-auth': window.localStorage.getItem("token") },
         data: {deviceId: $("#deviceId").val()},
         responseType: 'json',
         success: deviceRegistered,
@@ -23,3 +24,10 @@ function deviceRegistered(data, status, xhr) {
 }
 
 $("#registerDevice").click(registerDevice);
+
+document.addEventListener("DOMContentLoaded", function() {
+    // CHeck if there is a token, if not, redirect to signin
+    if( !window.localStorage.getItem("token")){
+        window.location = "signin.html";
+    }
+});

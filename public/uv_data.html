@@ -17,17 +17,6 @@
                     <span class = "mdl-layout-title">SunSmart</span>
                 </div>
             </header>
-            <footer class="mdl-mega-footer">
-                <div class="mdl-mega-footer__left-section">
-                    <span class = "mdl-layout-title">Learn More About UV</span>
-                    <h1 class="mdl-mega-footer__heading">Atricles</h1>
-                    <ul class="mdl-mega-footer__link-list">
-                        <li><a class="mdl-navigation__link" href = "https://www.cancer.org/cancer/skin-cancer/prevention-and-early-detection/what-is-uv-radiation.html">Cancer.org</a></li>
-                        <li><a class="mdl-navigation__link" href = "https://www.livescience.com/50326-what-is-ultraviolet-light.html">LiveScience</a></li>
-                        <li><a class="mdl-navigation__link" href = "https://science.nasa.gov/ems/10_ultravioletwaves">NASA</a></li>
-                    </ul>
-                </div>
-            </footer>
         <div class="mdl-layout__drawer">
             <span class="mdl-layout-title">SunSmart</span>
             <nav class="mdl-navigation">
@@ -42,8 +31,27 @@
             <main class="mdl-layout__content">
                 <div class="page-content">
                     <div id="chart_div"></div>
+                    <select id="rangeSelect">
+                        <option value=\"hour\" selected>Last Hour</option>
+                        <option value=\"day\">Last Day</option>
+                        <option value=\"week\">Last Week</option>
+                        <option value=\"month\">Last Month</option>
+                        <option value=\"year\">Last Year</option>
+                    </select>
+                    <button id="refresh">Refresh</button>
                 </div>
             </main>
+            <footer class="mdl-mega-footer">
+                <div class="mdl-mega-footer__left-section">
+                    <span class = "mdl-layout-title">Learn More About UV</span>
+                    <h1 class="mdl-mega-footer__heading">Atricles</h1>
+                    <ul class="mdl-mega-footer__link-list">
+                        <li><a class="mdl-navigation__link" href = "https://www.cancer.org/cancer/skin-cancer/prevention-and-early-detection/what-is-uv-radiation.html">Cancer.org</a></li>
+                        <li><a class="mdl-navigation__link" href = "https://www.livescience.com/50326-what-is-ultraviolet-light.html">LiveScience</a></li>
+                        <li><a class="mdl-navigation__link" href = "https://science.nasa.gov/ems/10_ultravioletwaves">NASA</a></li>
+                    </ul>
+                </div>
+            </footer>
         </div>
     </body>
 </html>
