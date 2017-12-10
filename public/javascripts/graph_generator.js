@@ -29,7 +29,7 @@ function drawChart(res, status, xhr) {
   data.addColumn('datetime', 'Hour');
   data.addColumn('number', 'UV Level');
   var rows = [];
-  var range = $("#rangeSelect").value;
+  var range = $("#rangeSelect").val();
 
 
   $.get("/data/"+ res["deviceID"], null, function(response){
