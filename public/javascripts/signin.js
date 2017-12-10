@@ -39,7 +39,7 @@ function signInResponse() {
   }
   else {
     // Use a span with dark red text for errors
-    responseHTML = "<span class='red-text text-darken-2'>";
+    responseHTML = "<span style='color: red;'>";
     responseHTML += "Error: " + this.response.error;
     responseHTML += "</span>"
   }
