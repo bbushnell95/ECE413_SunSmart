@@ -6,6 +6,7 @@ This is the server code that handels all the routes for the API.
 [SunSmart](http://ec2-52-24-65-220.us-west-2.compute.amazonaws.com:3000/signin.html)
 
 # Demo Video
+[Demo Video](https://youtu.be/Q6plfr6auaQ)
 
 # Pitch Video
 [Pitch Video](https://youtu.be/tFbIQvWqfHA)
