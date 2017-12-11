@@ -5,6 +5,7 @@ var userSchema = new db.Schema({
 	email: String,
 	fullName: String,
 	password: String,
+	zip: String,
 	APIKEY: String
 });
 
