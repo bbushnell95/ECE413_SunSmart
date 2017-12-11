@@ -78,4 +78,59 @@ router.post('/register', function(req, res, next) {
 
 });
 
+router.post("/update", function (req, res, next) {
+    var secret = "twelveFilipinos";
+    var responseJson = {};
+
+    //get token from x-auth
+    var token = req.headers["x-auth"];
+
+    //decode
+    try{
+        var decoded = jwt.decode(token, secret);
+
+        if(req.body.hasOwnProperty("zip")){
+            User.findOneAndUpdate({email: decoded.email}, {zip: req.body.zip}, function(err, user){
+                if(err){
+                    responseJson.success = false;
+                    responseJson.message = err.errmsg;
+                    res.status(401).json(responseJson);
+                }else{
+                    console.log(user);
+                    responseJson.success = true;
+                    responseJson.message = "Zip code for " + decoded.email + " has been updated";
+                    res.status(200).json(responseJson);
+                }
+            });
+        }
+        else if(req.body.hasOwnProperty("password")){
+            bcrypt.hash(req.body.password, null, null, function(err, hash){
+                User.findOneAndUpdate({email:decoded.email}, {password: hash}, function(err, user){
+                    if(err){
+                        responseJson.success = false;
+                        responseJson.message = err.errmsg;
+                        res.status(401).json(responseJson);
+                    }
+                    else{
+                        console.log(user);
+                        responseJson.success = true;
+                        responseJson.message = "Password for " + decoded.email + " has been updated";
+                        res.status(200).json(responseJson);
+                    }
+                });
+            });
+        }
+        else {
+            responseJson.success = false;
+            responseJson.message = "No update parameters given";
+            res.status(401).json(responseJson);
+        }
+    } catch(exception) {
+        responseJson.success = false;
+        responseJson.message = "Auth error";
+        res.status(401).json(responseJson);
+    }
+        
+});
+
 module.exports = router;
